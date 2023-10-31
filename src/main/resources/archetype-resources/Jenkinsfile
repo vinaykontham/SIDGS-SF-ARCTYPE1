@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+        nodejs 'NodeJS'
+    }
+           stages {
+                stage('Clean') {
+                    steps {
+                            dir('edge') {
+                               sh "mvn clean"
+                            }
+                    }
+                }
+
+
+                stage('Build Sharedflow bundle') {
+         	        steps {
+        				   dir('edge') {
+
+        					   withCredentials([usernamePassword(credentialsId: "ferguson-edge-cred",
+                                     passwordVariable: 'apigee_pwd',
+                                     usernameVariable: 'apigee_user')]) {
+
+         	                   sh "mvn package -Papigee -Denv=${params.apigee_env} -Dorg=${params.apigee_org}"+
+                                     " -Dusername=${apigee_user} -Dpassword=${apigee_pwd} "
+
+                    	       }
+         	    	       }
+        		    }
+
+        		}
+
+
+                stage('Deploy Sharedflow bundle') {
+                      steps {
+                            dir('edge') {
+                                withCredentials([usernamePassword(credentialsId: "ferguson-edge-cred",
+                                         passwordVariable: 'apigee_pwd',
+                                         usernameVariable: 'apigee_user')]) {
+
+                                             sh "mvn apigee-enterprise:deploy -Papigee -Denv=${params.apigee_env} -Dorg=${params.apigee_org}" +
+                                                     " -Doptions=update -Dusername=${apigee_user} -Dpassword=${apigee_pwd} "+
+                                                     " -Dbearer=${bearer} -Drefresh=${refresh} " +
+                                                     " -Dauthtype=${authtype} -Dtokenurl=${tokenurl} "
+                                         }
+                            }
+                      }
+
+                }
+                
+                
+                
+                stage('Release to Artifactory') {
+                    steps {
+                    
+                    withMaven(maven: 'Maven',
+                    globalMavenSettingsConfig: 'cicd-settings-file') {
+                    sh "mvn deploy"
+                      }
+                    
+                        
+                    }
+                }
+            
+        }
+}
+

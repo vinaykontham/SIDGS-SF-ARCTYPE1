@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog>
+    <archetypes>
+        <archetype>
+            <groupId>com.hdfc.sharedflow.archetype</groupId>
+            <artifactId>sf</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <repository>http://35.200.157.27:8081/repository/apigee-snapshot</repository>
+            <description>Apigee Shared Flow Project</description>
+        </archetype>
+    </archetypes>
+</archetype-catalog>

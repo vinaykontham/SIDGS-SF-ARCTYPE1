@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hdfc.sharedflow.archetype.poc</groupId>
+    <artifactId>sf</artifactId>
+
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>sf</name>
+    <description>Baseline SHARED FLOW Archetype</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jgitflow.version>1.0-m5.1</jgitflow.version>      
+
+         <!-- Nexus server details for FEI New infra -->
+        <repo.server.protocol>http</repo.server.protocol>
+        <repo.server.root>172.23.48.1:8082/</repo.server.root>
+        <repo.path>artifactory</repo.path>
+        <repo.name>apigee-</repo.name>
+
+        <!--Release repo URL for New Nexus -->
+        <releases.distribution.url>${repo.server.protocol}://${repo.server.root}/${repo.path}/${repo.name}release1/
+        </releases.distribution.url>
+        <!--Snapshot repo URL for New Nexus -->
+        <snapshot.distribution.url>${repo.server.protocol}://${repo.server.root}/${repo.path}/${repo.name}snapshot1/
+        </snapshot.distribution.url>
+    </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>apiSnapshotRepository</id>
+            <name>Internal Snapshots Repository</name>
+            <url>${snapshot.distribution.url}</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+         <repository>
+            <id>apiReleaseRepository</id>
+            <name>Internal Maven Release Repository</name>
+            <url>${releases.distribution.url}</url>
+         </repository>
+    </distributionManagement>
+
+
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>gitflow</id>
+            <build>
+                    <plugins>
+                        <plugin>
+                            <groupId>external.atlassian.jgitflow</groupId>
+                            <artifactId>jgitflow-maven-plugin</artifactId>
+                            <version>${jgitflow.version}</version>
+                            <configuration>
+                                <noDeploy>true</noDeploy>
+                                <username>${scmUsername}</username>
+                                <password>${scmPassword}</password>
+                                <flowInitContext>
+                                    <masterBranchName>master</masterBranchName>
+                                    <developBranchName>develop</developBranchName>
+                                    <featureBranchPrefix>feat-</featureBranchPrefix>
+                                    <releaseBranchPrefix>rel-</releaseBranchPrefix>
+                                    <hotfixBranchPrefix>hf-</hotfixBranchPrefix>
+                                </flowInitContext>
+                                <!-- Keep your maven submodules at the same version as the aggregator POM -->
+                                <autoVersionSubmodules>true</autoVersionSubmodules>
+                                <!-- Share feature branches -->
+                                <pushFeatures>true</pushFeatures>
+                                <!-- Create a release branch when a release goal is initiated -->
+                                <pushReleases>true</pushReleases>
+                                <!-- Share maintenance branches -->
+                                <pushHotfixes>true</pushHotfixes>
+                                <!-- Prevents deployments from development workstations so that they can
+                                be done by a CI server -->
+                                <noDeploy>true</noDeploy>
+                                <enableFeatureVersions>true</enableFeatureVersions>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+            </build>
+        </profile>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>release</id>
+            <!-- Needs to be activated only when we are performing artifact releases -->
+            <distributionManagement>
+                <repository>
+                    <id>apiReleaseRepository</id>
+                    <name>Internal Maven Release Repository</name>
+                    <url>artifactregistry://asia-south2-maven.pkg.dev/hsl-reference-project/apigee-release</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+    
+
+</project>

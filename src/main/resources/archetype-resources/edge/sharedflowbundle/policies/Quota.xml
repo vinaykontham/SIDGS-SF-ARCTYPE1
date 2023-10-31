@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota async="false" continueOnError="false" enabled="true" name="Quota">
+    <DisplayName>Quota</DisplayName>
+    <Properties/>
+    <Allow count="2000" countRef="request.header.allowed_quota"/>
+    <Interval ref="request.header.quota_count">1</Interval>
+    <Distributed>true</Distributed>
+    <Synchronous>true</Synchronous>
+    <TimeUnit ref="request.header.quota_timeout">month</TimeUnit>
+</Quota>

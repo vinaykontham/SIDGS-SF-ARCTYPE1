@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="sf archetype for Apigee ">
+    <requiredProperties>
+        <requiredProperty key="version">
+            <defaultValue>1.0.0-SNAPSHOT</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="artifactId"/>
+
+        <!-- <requiredProperty key="parentPomVersion"/> -->
+        <!-- <requiredProperty key="packageName"/> -->
+    </requiredProperties>
+    <fileSets>
+        <fileSet filtered="true" packaged="false">
+            <directory>edge</directory>
+            <includes>
+                <include>**/*</include>
+                <include>**/Jenkinsfile</include>
+                <include>**/Jenkinsfile-cicd</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false">
+            <directory></directory>
+            <includes>
+                <include>**/Jenkinsfile</include>
+                <include>**/Jenkinsfile-cicd</include>
+                <include>**/.gitignore</include>
+                <include>**/pom.xml</include>
+                <include>**/readme.md</include>
+
+            </includes>
+        </fileSet>
+
+
+        <!-- <fileSet filtered="true" packaged="false">
+            <directory></directory>
+            <includes>
+                <include>swagger.json</include>
+                <include>edge.json</include>
+                <include>config.json</include>
+                <include>readme.md</include>
+                <include>.gitignore</include>
+                <include>api-metadata.properties</include>
+            </includes>
+        </fileSet> -->
+    </fileSets>
+</archetype-descriptor>

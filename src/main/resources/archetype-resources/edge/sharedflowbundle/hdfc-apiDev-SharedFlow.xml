@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="hdfc-apiDev-SharedFlow">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1546629364784</CreatedAt>
+    <CreatedBy>vivekk@sidgs.com</CreatedBy>
+    <Description>Shared flow which will be used in CICD demonstration</Description>
+    <DisplayName>${artifactId}</DisplayName>
+    <LastModifiedAt>1546629491554</LastModifiedAt>
+    <LastModifiedBy>vivekk@sidgs.com</LastModifiedBy>
+    <Policies>
+        <Policy>OA-verifyAccessToken</Policy>
+        <Policy>Quota</Policy>
+        <Policy>SA-rateLimit</Policy>
+    </Policies>
+    <Resources/>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>
