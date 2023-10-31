@@ -21,13 +21,13 @@
         <repo.server.protocol>http</repo.server.protocol>
         <repo.server.root> 172.19.0.1:8082/</repo.server.root>
         <repo.path>artifactory</repo.path>
-        <repo.name>apigee-</repo.name>
+        <repo.name>api</repo.name>
 
         <!--Release repo URL for New Nexus -->
-        <releases.distribution.url>${repo.server.protocol}://${repo.server.root}/${repo.path}/${repo.name}release1/
+        <releases.distribution.url>${repo.server.protocol}://${repo.server.root}/${repo.path}/${repo.name}ReleaseRepository/
         </releases.distribution.url>
         <!--Snapshot repo URL for New Nexus -->
-        <snapshot.distribution.url>${repo.server.protocol}://${repo.server.root}/${repo.path}/${repo.name}snapshot1/
+        <snapshot.distribution.url>${repo.server.protocol}://${repo.server.root}/${repo.path}/${repo.name}SnapshotRepository/
         </snapshot.distribution.url>
     </properties>
 
